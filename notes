@@ -1,0 +1,16 @@
+notes
+
+mkfs.fat -F32 /dev/nvme0n1p1       # Format EFI partition
+mkfs.ext4 /dev/nvme0n1p2
+
+mount /dev/nvme0n1p2 /mnt                    # Mount root
+mkdir -p /mnt/boot/efi                  # Create mount point for EFI
+mount /dev/nvme0n1p1 /mnt/boot/efi 
+
+
+nano /mnt/etc/nixos/configuration.nix
+
+
+boot.loader.systemd-boot.enable = true;
+boot.loader.efi.canTouchEfiVariables = true;
+boot.loader.efi.efisysmountpoint = "/boot/efi";
